@@ -1,0 +1,24 @@
+<Directory "/var/www/vhosts/hostname">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+</Directory>
+
+<VirtualHost *:80>
+    ServerName hostname
+    DocumentRoot /var/www/vhosts/hostname/www
+    EnableSendfile off
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName hostname
+    DocumentRoot /var/www/vhosts/hostname/www
+    SSLEngine On
+    SSLCertificateFile /etc/pki/tls/certs/localhost.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
+    SetEnvIf User-Agent ".*MSIE.*" \
+         nokeepalive ssl-unclean-shutdown \
+         downgrade-1.0 force-response-1.0
+    EnableSendfile off
+</VirtualHost>

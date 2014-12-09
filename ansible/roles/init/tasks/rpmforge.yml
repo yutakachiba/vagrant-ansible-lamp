@@ -1,0 +1,10 @@
+---
+- name: be sure rpmforge repository is installed
+  yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+  notify:
+    - import rpmforge key
+  tags: rpmforge
+
+- name: disable rpmforge repository
+  ini_file: dest=/etc/yum.repos.d/rpmforge.repo section="rpmforge" option="enabled" value="0"
+  tags: rpmforge

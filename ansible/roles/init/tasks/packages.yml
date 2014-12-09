@@ -1,0 +1,8 @@
+---
+- name: yum update
+  yum: name=* state=latest
+
+- name: be sure system packages are installed
+  yum: name={{ item }} state=installed
+  with_items: sys_packages
+  tags: packages

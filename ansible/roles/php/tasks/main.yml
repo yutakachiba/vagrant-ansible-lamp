@@ -1,0 +1,24 @@
+---
+- name: be sure php is installed
+  yum: name={{item}} state=installed enablerepo=remi-php55
+  with_items: php_packages
+  notify:
+    - restart httpd
+  tags: php
+
+- name: configure php.ini
+  lineinfile: >
+    dest=/etc/php.ini
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  with_items:
+    - regexp: '^;?date.timezone ='
+      line: 'date.timezone = Asia/Tokyo'
+    - regexp: '^expose_php ='
+      line: 'expose_php = Off'
+  notify: restart httpd
+  tags: php

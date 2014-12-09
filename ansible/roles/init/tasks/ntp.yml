@@ -1,0 +1,8 @@
+---
+- name: be sure ntp is installed
+  yum: name=ntp state=installed
+  tags: ntpd
+
+- name: be sure ntpd is running and enabled
+  service: name=ntpd state=running enabled=yes
+  tags: ntpd

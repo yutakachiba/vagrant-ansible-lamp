@@ -1,0 +1,9 @@
+---
+- include: timezone.yml
+- include: rpmforge.yml
+- include: epel.yml
+- include: remi.yml
+- include: packages.yml
+- include: yum-cron.yml
+- include: sshd.yml
+- include: ntp.yml

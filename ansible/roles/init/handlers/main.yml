@@ -1,0 +1,15 @@
+---
+- name: import rpmforge key
+  command: /bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-RPMFORGE
+
+- name: import epel key
+  command: /bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+
+- name: import remi key
+  command: /bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+
+- name: restart sshd
+  service: name=sshd state=restarted
+
+- name: restart yum-cron
+  service: name=yum-cron state=restarted

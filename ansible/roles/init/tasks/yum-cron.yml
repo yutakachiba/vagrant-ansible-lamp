@@ -1,0 +1,25 @@
+---
+- name: be sure yum-cron is installed
+  yum: name=yum-cron state=installed
+  tags: yum-cron
+
+- name: be sure yum-cron is running and enabled
+  service: name=yum-cron state=running enabled=yes
+  tags: yum-cron
+
+- name: configure yum-cron
+  lineinfile: >
+    dest=/etc/sysconfig/yum-cron
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  with_items:
+    - regexp: '^CHECK_ONLY='
+      line: 'CHECK_ONLY=yes'
+    - regexp: '^DOWNLOAD_ONLY='
+      line: 'DOWNLOAD_ONLY=no'
+  notify: restart yum-cron
+  tags: yum-cron
