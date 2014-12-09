@@ -1,7 +1,7 @@
 - name: configure timezone
   template: src=timezone.tpl dest=/etc/timezone
-  tag: timezone
+  tags: timezone
 
 - name: more configure timezone
   file: src=/usr/share/zoneinfo/{{timezone}} dest=/etc/localtime state=link force=yes backup=yes
-  tag: timezone
+  tags: timezone

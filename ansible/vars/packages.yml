@@ -1,3 +1,4 @@
 ---
     sys_packages: ["bind-utils","wget","nkf","git","tree","ImageMagick","ImageMagick-devel"]
+    sys_remi_packages: ["gd-last"]
     php_packages: ["php","php-pear","php-pecl-apcu","php-mbstring","php-gd","php-mysql","php-pdo"]
