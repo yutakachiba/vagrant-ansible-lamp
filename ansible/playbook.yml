@@ -8,6 +8,7 @@
   roles:
     - init
     - apache
-    - php
     - mysql
+    - postgresql
+    - php
     - composer

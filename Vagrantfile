@@ -14,12 +14,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 22, host: 2210
 #  config.vm.network :public_network, :bridge => "en0: Wi-Fi (AirPort)"
   
-  config.vm.synced_folder ".", "/var/www/vhosts", :create => true, :owner => 'vagrant', :group => 'vagrant', :mount_options => ['dmode=777', 'fmode=755']
+#  config.vm.synced_folder ".", "/var/www/vhosts", :create => true, :owner => 'vagrant', :group => 'vagrant', :mount_options => ['dmode=777', 'fmode=755']
 
-  config.ssh.pty = true
+#  config.ssh.pty = true
 
-  config.vm.provision :ansible do |ansible|
-    ansible.playbook = "ansible/playbook.yml"
+#  config.vm.provision :ansible do |ansible|
+#    ansible.playbook = "ansible/playbook.yml"
 #    ansible.inventory_path = "ansible/inventories/dev"
-  end
+#  end
 end

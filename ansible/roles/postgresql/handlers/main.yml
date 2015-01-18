@@ -1,0 +1,6 @@
+---
+- name: import pgdg key
+  command: /bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-94
+
+- name: restart postgresql
+  service: name=postgresql-9.4 enabled=yes state=restarted

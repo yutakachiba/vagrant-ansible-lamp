@@ -1,0 +1,47 @@
+---
+- name: be sure pgdg repository is installed
+  yum: name=http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+  notify:
+    - import pgdg key
+  tags: postgresql
+
+- name: be sure postgresql is installed
+  yum: pkg={{item}} state=latest
+  with_items:
+    - postgresql94-server
+    - postgresql94-contrib
+    - postgresql94
+  tags: postgresql
+
+- name: initiate database
+  command: service postgresql-9.4 initdb
+           creates=/var/lib/pgsql/9.4/data/postgresql.conf
+  tags: postgresql
+
+- name: be sure postgresql is running and enabled
+  service: name=postgresql-9.4 state=started enabled=yes
+  tags: postgresql
+
+- name: ensure PostgreSQL is listening on all hosts
+  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
+              backup=yes
+              regexp='^#?listen_addresses\s*='
+              line="listen_addresses = '*'"
+              state=present
+  notify: restart postgresql
+  tags: postgresql
+
+- name: ensure access from localhost
+  lineinfile: >
+    dest=/var/lib/pgsql/9.4/data/pg_hba.conf
+    backup=yes
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  with_items:
+    - regexp: 'local\s+all\s+all\s+peer'
+      line: 'local all all trust'
+    - regexp: 'host\s+all\s+all\s+127.0.0.1/32\s+ident'
+      line: 'host all all 127.0.0.1/32 md5'
+  notify: restart postgresql
+  tags: postgresql
+
