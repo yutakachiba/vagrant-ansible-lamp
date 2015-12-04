@@ -7,20 +7,17 @@
     - mod_ssl
   tags: httpd
 
-#- name: create virtualhost root
-#  file: dest=/var/www/vhosts state=directory owner=apache group=apache mode=0775
+#- name: be sure httpd.conf is configured
+#  template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf backup=yes
+#  notify:
+#    - restart httpd
+#  tags: httpd
 
-- name: be sure httpd.conf is configured
-  template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
-  notify:
-    - restart httpd
-  tags: httpd
-
-- name: be sure ssl.conf is configured
-  template: src=ssl.conf.j2 dest=/etc/httpd/conf.d/ssl.conf
-  notify:
-    - restart httpd
-  tags: httpd
+#- name: be sure ssl.conf is configured
+#  template: src=ssl.conf.j2 dest=/etc/httpd/conf.d/ssl.conf backup=yes
+#  notify:
+#    - restart httpd
+#  tags: httpd
 
 - name: configure vhosts-hostname.conf
   template: src=vhosts.conf.j2 dest=/etc/httpd/conf.d/vhosts-hostname.conf owner=root group=root mode=0644

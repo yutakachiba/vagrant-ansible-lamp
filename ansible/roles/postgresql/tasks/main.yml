@@ -34,7 +34,6 @@
               regexp='^#?listen_addresses\s*='
               line="listen_addresses = '*'"
               state=present
-  notify: restart postgresql
   tags: postgresql
 
 - name: ensure access from localhost
@@ -48,11 +47,16 @@
       line: 'local all all trust'
     - regexp: 'host\s+all\s+all\s+127.0.0.1/32\s+ident'
       line: 'host all all 127.0.0.1/32 md5'
-  notify: restart postgresql
+  tags: postgresql
+
+- name: be sure postgresql is restarted
+  service: name=postgresql-9.4 state=restarted
   tags: postgresql
 
 - name: create db
   postgresql_db: name={{ dbname }}
+  tags: postgresql
 
 - name: add user
   postgresql_user: db={{ dbname }} name={{ dbuser }} password={{ dbpass }}
+  tags: postgresql
