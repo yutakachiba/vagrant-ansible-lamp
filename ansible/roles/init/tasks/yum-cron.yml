@@ -9,7 +9,8 @@
 
 - name: configure yum-cron
   lineinfile: >
-    dest=/etc/sysconfig/yum-cron
+    dest=/etc/yum/yum-cron.conf
+    state=present
     owner=root
     group=root
     mode=0644
@@ -17,9 +18,9 @@
     regexp="{{ item.regexp }}"
     line="{{ item.line }}"
   with_items:
-    - regexp: '^CHECK_ONLY='
-      line: 'CHECK_ONLY=yes'
-    - regexp: '^DOWNLOAD_ONLY='
-      line: 'DOWNLOAD_ONLY=no'
+    - regexp: '^apply_updates ='
+      line: 'apply_updates = yes'
+    - regexp: '^update_cmd ='
+      line: 'update_cmd = security'
   notify: restart yum-cron
   tags: yum-cron

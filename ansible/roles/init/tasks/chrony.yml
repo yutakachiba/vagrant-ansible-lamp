@@ -1,0 +1,8 @@
+---
+- name: be sure chrony is installed
+  yum: name=chrony state=installed
+  tags: chrony
+
+- name: be sure chrony is running and enabled
+  service: name=chronyd state=running enabled=yes
+  tags: chrony

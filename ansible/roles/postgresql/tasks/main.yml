@@ -11,11 +11,17 @@
     - postgresql94-server
     - postgresql94-contrib
     - postgresql94
+    - python-psycopg2
+  tags: postgresql
+
+- name: check whether postgresql.conf exists or not
+  shell: "[ -f /var/lib/pgsql/9.4/data/postgresql.conf ] && echo 'Found' || echo ''"
+  register: postgresql_conf_exists
   tags: postgresql
 
 - name: initiate database
-  command: service postgresql-9.4 initdb
-           creates=/var/lib/pgsql/9.4/data/postgresql.conf
+  shell: /usr/pgsql-9.4/bin/postgresql94-setup initdb
+  when: (not postgresql_conf_exists.stdout)
   tags: postgresql
 
 - name: be sure postgresql is running and enabled
@@ -45,3 +51,8 @@
   notify: restart postgresql
   tags: postgresql
 
+- name: create db
+  postgresql_db: name={{ dbname }}
+
+- name: add user
+  postgresql_user: db={{ dbname }} name={{ dbuser }} password={{ dbpass }}

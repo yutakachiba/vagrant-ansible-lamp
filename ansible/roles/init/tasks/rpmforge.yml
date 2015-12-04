@@ -1,6 +1,6 @@
 ---
 - name: be sure rpmforge repository is installed
-  yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+  yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
   notify:
     - import rpmforge key
   tags: rpmforge

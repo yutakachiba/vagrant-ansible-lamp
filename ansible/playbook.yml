@@ -5,10 +5,10 @@
     timezone: Asia/Tokyo
   vars_files:
     - vars/packages.yml
+    - vars/postgresql.yml
   roles:
     - init
     - apache
-    - mysql
-    - postgresql
     - php
     - composer
+    - postgresql

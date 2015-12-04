@@ -1,6 +1,6 @@
 ---
 - name: be sure remi repository is installed
-  yum: name=http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+  yum: name=http://rpms.famillecollet.com/enterprise/remi-release-7.rpm state=installed
   notify:
     - import remi key
   tags: remi

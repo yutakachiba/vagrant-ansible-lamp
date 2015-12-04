@@ -1,6 +1,6 @@
 ---
 - name: be sure php is installed
-  yum: name={{item}} state=installed enablerepo=remi-php55
+  yum: name={{item}} state=installed enablerepo=remi-php70
   with_items: php_packages
   notify:
     - restart httpd
